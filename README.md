@@ -33,11 +33,11 @@ python -m nfcpy
 lsusb
 ```
 を実行して、
-
-  <span style="color:red">Bus 001 Device 004: ID 054c:06c3 Sony Corp. RC-S380</span>  
+```
+  Bus 001 Device 004: ID 054c:06c3 Sony Corp. RC-S380
   Bus 001 Device 005: ID 0424:7800 Standard Microsystems Corp.   
   Bus 001 Device 003: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub  
   Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub  
   Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub  
-
+```
 みたいに認識されてたらOKです
