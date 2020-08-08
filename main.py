@@ -2,6 +2,8 @@ import nfc
 import binascii
 import os
 import json
+import urllib.request
+import urllib.parse
 
 
 class CardReader:
@@ -12,15 +14,15 @@ class CardReader:
         clf.close()
 
     def on_connect(self, tag):
-        IDm = binascii.hexlify(tag._nfcid)
-        print("IDm : {IDm}".format(IDm=IDm))
+        tagID = str(binascii.hexlify(tag._nfcid))[2:-1]
+        print("IDm : {IDm}".format(IDm=tagID)
+              )
         return True
 
     def convert_IDm(self, IDm):
         # convert from IDm to memberID
         return True
 
-    """
     # should import urlib.parse and urlib.request
     def record(self, memberID):
         UdonURL = ""  # Udon API Server
@@ -32,7 +34,6 @@ class CardReader:
         req = urllib.request.Request(UdonURL, data)
         with urllib.request.urlopen(UdonURL, data=req) as res:
             print(res.read)  # TODO read Status Code and output something
-    """
 
 
 if __name__ == '__main__':
