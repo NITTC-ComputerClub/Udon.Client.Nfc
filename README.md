@@ -3,20 +3,20 @@ Udonのクライアントサイド
 NFC情報を読み取り、サーバーへ送信し認証する
 ## 開発時の環境
 - PaSoRi(Sony RC-S380)
-- Python 2.7.16
+- Python 3.7.3
 - pip 18.1
 - Raspberry Pi model 3B(たぶん)
 ### モジュール
 - nfcpy
 ## 初期設定
-初期ではsudoしないと使えないが、推奨されないので設定を行う。
-```
-pip install nfcpy
-```
+初期ではsudoしないと使えないが、推奨されないので設定を行う。  
 ホントはrequirements.txtとか書くべきなのでそのうちやります]
-
 ```
-python -m nfcpy
+pip3 install nfcpy
+```
+その後、
+```
+python3 -m nfcpy
 ```
 すると、何すればいいか書いてある。具体的には
 ```
@@ -40,4 +40,13 @@ lsusb
   Bus 001 Device 002: ID 0424:2514 Standard Microsystems Corp. USB 2.0 Hub  
   Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub  
 ```
-みたいに認識されてたらOKです
+みたいに認識されてたらOKです  
+
+あとは
+```
+python3 main.py
+```
+してください。
+
+## 注意点
+- python2系での動作は保証されません、必ずpython**3**コマンドで実行してください。
