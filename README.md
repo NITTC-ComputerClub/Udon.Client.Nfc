@@ -49,7 +49,7 @@ python3 main.py
 
 ## 新規タグ登録
 ```
-python3 reghister.py
+python3 register.py
 ```
 
 ## 注意点
