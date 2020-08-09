@@ -7,7 +7,7 @@ from main import Reader
 
 class CardRegister(Reader):
     def on_connect(self, tag):
-        super.on_connect()
+        super().on_connect()
         self.registNewTag()
 
     def registNewTag(self):

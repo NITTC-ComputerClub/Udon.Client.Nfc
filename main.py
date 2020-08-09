@@ -27,7 +27,7 @@ class Reader:
 
 class CardReader(Reader):
     def on_connect(self, tag):
-        super.on_connect()
+        super().on_connect()
         self.convert_IDm()
         self.recordMemberID()
 
