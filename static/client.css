@@ -11,13 +11,13 @@
     color:silver;
 }
 #connection_error_icon{
-    fill:#FFC107;
+    fill:#dc3545
 }
 #tag_error_icon{
-    fill:#FFC107;
+    fill:#dc3545
 }
 #other_error_icon{
-    fill:#FFC107;
+    fill:#dc3545
 }
 #succeed_icon{
     fill:#73CE87;
