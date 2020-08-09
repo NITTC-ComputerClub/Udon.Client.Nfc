@@ -10,7 +10,13 @@
     text-align: center;
     color:silver;
 }
-#error_icon{
+#connection_error_icon{
+    fill:#FFC107;
+}
+#tag_error_icon{
+    fill:#FFC107;
+}
+#other_error_icon{
     fill:#FFC107;
 }
 #succeed_icon{

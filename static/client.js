@@ -17,7 +17,13 @@ socket.addEventListener('message', function (event) {
             $("#succeeded").css("display", "block");
             break;
         case "3":
-            $("#error").css("display", "block");
+            $("#connection_error").css("display", "block");
+            break;
+        case "4":
+            $("#tag_error").css("display", "block");
+            break;
+        case "5":
+            $("#other_error").css("display", "block");
             break;
         default:
             console.log("Something Wrong...");
