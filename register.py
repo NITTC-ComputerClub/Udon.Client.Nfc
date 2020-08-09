@@ -2,9 +2,19 @@ import json
 import nfc
 import binascii
 import os
-from main import CardReader
+from main import Reader
+
+
+class CardRegister(Reader):
+    def on_connect(self, tag):
+        super.on_connect()
+        self.registNewTag()
+
+    def registNewTag(self):
+        newTagID = self.tagIDbeforeConvert
+        # regist new tag
 
 
 while True:
-    reader = CardReader()
-    cr.read_tag()
+    register = CardRegister()
+    register.read()

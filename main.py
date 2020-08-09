@@ -6,8 +6,8 @@ import urllib.request
 import urllib.parse
 
 
-class CardReader:
-    def read_tag(self):
+class Reader:
+    def read(self):
         clf = nfc.ContactlessFrontend('usb')
         print("Touch me")
         """
@@ -21,13 +21,21 @@ class CardReader:
     def on_connect(self, tag):
         tagID = str(binascii.hexlify(tag._nfcid))[2:-1]
         print("IDm : {IDm}".format(IDm=tagID))
-        memberID = self.convert_IDm(tagID)
-        #
-        # TODO Record
+        self.tagIDbeforeConvert = tagID
         return True
 
-    def convert_IDm(self, IDm):
+
+class CardReader(Reader):
+    def on_connect(self, tag):
+        super.on_connect()
+        self.convert_IDm()
+        self.recordMemberID()
+
+    def convert_IDm(self):
+        IDbeforeConvert = self.tagIDbeforeConvert
+        convertedID = ""
         # convert from IDm to memberID
+        self.memberID = convertedID
         return True
         """
         on error 
@@ -37,13 +45,11 @@ class CardReader:
         in on_connect
         """
 
-
-class Recorder:
-    def record(self, memberID):
+    def recordMemberID(self):
         UdonURL = ""  # Udon API Server
         values = {
             "client": os.environ["Client_ID"],  # TODO set client id
-            "member": memberID
+            "member": self.memberID
         }
         data = urllib.parse.urlencode(values)
         req = urllib.request.Request(UdonURL, data)
@@ -61,4 +67,4 @@ if __name__ == '__main__':
     # TODO GUI
     while True:
         cr = CardReader()
-        cr.read_tag()
+        cr.read()
