@@ -1,0 +1,22 @@
+.row{
+    text-align:center;
+}
+.title{
+    font-size: 3vw;
+    text-align: center;
+}
+.addendum{
+    font-size:2vw;
+    text-align: center;
+    color:silver;
+}
+#error_icon{
+    fill:#FFC107;
+}
+#succeed_icon{
+    fill:#73CE87;
+}
+.components{
+    margin-top: 10vh;
+    display: none;
+}
