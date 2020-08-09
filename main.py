@@ -30,6 +30,7 @@ class CardReader(Reader):
         super(tag).on_connect()
         self.convert_IDm()
         self.recordMemberID()
+        return True
 
     def convert_IDm(self):
         IDbeforeConvert = self.tagIDbeforeConvert

@@ -9,6 +9,7 @@ class CardRegister(Reader):
     def on_connect(self, tag):
         super().on_connect(tag)
         self.registNewTag()
+        return True
 
     def registNewTag(self):
         newTagID = self.tagIDbeforeConvert
