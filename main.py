@@ -19,7 +19,7 @@ class Reader:
         clf.close()
 
     def on_connect(self, tag):
-        tagID = str(binascii.hexlify(tag._nfcid))[2:-1]
+        tagID = str(binascii.hexlify(tag._nfcid))
         print("IDm : {IDm}".format(IDm=tagID))
         self.tagIDbeforeConvert = tagID
         return True
