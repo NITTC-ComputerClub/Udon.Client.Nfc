@@ -1,7 +1,7 @@
 const socket = new WebSocket("ws://localhost:9999/");
 socket.addEventListener('open', function (event) {
     console.log("System Ready");
-    $("#listening_img").css("display", "block");
+    $("#listening").css("display", "block");
 });
 socket.addEventListener('message', function (event) {
     console.log(event.data);
