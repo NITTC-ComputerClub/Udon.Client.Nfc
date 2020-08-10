@@ -3,6 +3,7 @@ import nfc
 import binascii
 import os
 from main import Reader
+from websocket_server import WebsocketServer
 
 
 class CardRegister(Reader):
