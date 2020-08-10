@@ -4,11 +4,13 @@ import os
 import json
 import urllib.request
 import urllib.parse
+from websocket_server import WebsocketServer
 
 
 class Reader:
-    def read(self):
+    def read(self, *args):
         clf = nfc.ContactlessFrontend('usb')
+        server.send_message_to_all("0")  # Listening Tag...
         print("Touch me")
         """
         TODO make GUI
@@ -28,23 +30,28 @@ class Reader:
 class CardReader(Reader):
     def on_connect(self, tag):
         super().on_connect(tag)
-        self.convert_IDm()
-        self.recordMemberID()
+
+        if(self.convert_IDm()):
+            # Sending to server...
+            server.send_message_to_all("1")
+        else:
+            # This tag does not much any member
+            server.send_message_to_all("4")
+        if(self.recordMemberID()):
+            # Record succeed!
+            server.send_message_to_all("2")
+        else:
+            # Record Error
+            server.send_message_to_all("5")
         return True
 
     def convert_IDm(self):
         IDbeforeConvert = self.tagIDbeforeConvert
         convertedID = ""
         # convert from IDm to memberID
+        # if does not much any member return False
         self.memberID = convertedID
         return True
-        """
-        on error 
-        [Invalid NFC]
-        then
-        Recorder.record(memberID)
-        in on_connect
-        """
 
     def recordMemberID(self):
         UdonURL = ""  # Udon API Server
@@ -56,16 +63,13 @@ class CardReader(Reader):
         req = urllib.request.Request(UdonURL, data)
         with urllib.request.urlopen(UdonURL, data=req) as res:
             print(res.read)  # TODO read Status Code and output something
+            # If error occured,return False
+        return True
 
 
 if __name__ == '__main__':
-    """
-        TODO make GUI
-        like
-        [Starting...]
-        """
+    cr = CardReader()
+    server = WebsocketServer(9999, host="localhost")
+    server.set_fn_new_client(cr.read)
+    server.run_forever()
     print("System Started")
-    # TODO GUI
-    while True:
-        cr = CardReader()
-        cr.read()
