@@ -55,7 +55,7 @@ class CardReader(Reader):
 
     def recordMemberID(self):
         UdonURL = ""  # Udon API Server
-        values = {
+        """values = {
             "client": os.environ["Client_ID"],  # TODO set client id
             "member": self.memberID
         }
@@ -64,6 +64,7 @@ class CardReader(Reader):
         with urllib.request.urlopen(UdonURL, data=req) as res:
             print(res.read)  # TODO read Status Code and output something
             # If error occured,return False
+        """
         return True
 
 
@@ -72,4 +73,3 @@ if __name__ == '__main__':
     server = WebsocketServer(9999, host="localhost")
     server.set_fn_new_client(cr.read)
     server.run_forever()
-    print("System Started")
