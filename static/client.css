@@ -10,19 +10,9 @@
     text-align: center;
     color:silver;
 }
-#connection_error_icon{
-    fill:#dc3545
-}
-#tag_error_icon{
-    fill:#dc3545
-}
-#other_error_icon{
-    fill:#dc3545
+.error_icon{
+    fill:#dc3545;
 }
 #succeed_icon{
     fill:#73CE87;
-}
-.components{
-    margin-top: 10vh;
-    display: none;
 }

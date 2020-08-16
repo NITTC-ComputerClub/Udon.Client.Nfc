@@ -16,7 +16,7 @@ window.onload = async () => {
                 $("#sending").css("display", "block");
                 break;
             case "record_succeed":
-                $("#succeeded").css("display", "block");
+                $("#record_succeed").css("display", "block");
                 drawingOut();
                 break;
             case "3":
@@ -35,6 +35,7 @@ window.onload = async () => {
                 socket.send("client_ready");
                 break;
             case "regist_succeed":
+                $("#regist_succeed").css("display", "block");
                 drawingOut();
                 break;
             default:
