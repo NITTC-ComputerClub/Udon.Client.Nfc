@@ -24,6 +24,7 @@ window.onload = async () => {
             case "other_error":
                 $("#other_error").css("display", "block");
             case "touch_again":
+                $("#touch_again").css("display", "block");
                 socket.send("client_ready");
                 break;
             case "registing":
@@ -32,7 +33,7 @@ window.onload = async () => {
             case "regist_succeed":
                 $("#regist_succeed").css("display", "block");
             case "regist_error":
-                $("#sending").css("display", "block");
+                $("#regist_error").css("display", "block");
             default:
                 console.log("Something Wrong...");
                 console.log(event.data);
