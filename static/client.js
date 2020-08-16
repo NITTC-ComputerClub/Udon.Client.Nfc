@@ -17,27 +17,22 @@ window.onload = async () => {
                 break;
             case "record_succeed":
                 $("#record_succeed").css("display", "block");
-                drawingOut();
-                break;
             case "3":
                 $("#connection_error").css("display", "block");
-                drawingOut();
-                break;
             case "incorrect_tag":
                 $("#tag_error").css("display", "block");
-                drawingOut();
-                break;
             case "other_error":
                 $("#other_error").css("display", "block");
-                drawingOut();
-                break;
             case "touch_again":
                 socket.send("client_ready");
                 break;
+            case "registing":
+                $("#sending").css("display", "block");
+                break;
             case "regist_succeed":
                 $("#regist_succeed").css("display", "block");
-                drawingOut();
-                break;
+            case "regist_error":
+                $("#sending").css("display", "block");
             default:
                 console.log("Something Wrong...");
                 console.log(event.data);

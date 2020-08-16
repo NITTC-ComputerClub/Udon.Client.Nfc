@@ -22,7 +22,7 @@ class CardRegister(Reader):
                 server.send_message_to_all("registing")
                 self.registNewTag()
             else:
-                server.send_message_to_all("cannot_regist_this_tag")
+                server.send_message_to_all("regist_error")
             self.firstTouch = True
         return True
 
