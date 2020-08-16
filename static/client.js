@@ -7,29 +7,37 @@ socket.addEventListener('message', function (event) {
     console.log(event.data);
     $(".components").css("display", "none");
     switch (event.data) {
-        case "0":
+        case "listening":
             $("#listening").css("display", "block");
             break;
-        case "1":
+        case "sending":
             $("#sending").css("display", "block");
             break;
-        case "2":
+        case "record_succeed":
             $("#succeeded").css("display", "block");
+            drawingOut();
             break;
         case "3":
             $("#connection_error").css("display", "block");
+            drawingOut();
             break;
-        case "4":
+        case "incorrect_tag":
             $("#tag_error").css("display", "block");
+            drawingOut();
             break;
-        case "5":
+        case "other_error":
             $("#other_error").css("display", "block");
+            drawingOut();
             break;
         default:
             console.log("Something Wrong...");
             console.log(event.data);
+            drawingOut();
     }
-    setTimeout(() => {
-        socket.send(event.data);
-    }, 3000);
 });
+function drawingOut() {
+    setTimeout(socket.send("client_ready"), 1500);
+}
+window.onload = () => {
+    socket.send("client_ready");
+}

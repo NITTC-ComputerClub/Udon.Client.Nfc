@@ -8,17 +8,20 @@ from websocket_server import WebsocketServer
 
 
 class Reader:
-    def read(self, *args):
-        clf = nfc.ContactlessFrontend('usb')
-        server.send_message_to_all("0")  # Listening Tag...
-        print("Touch me")
-        """
-        TODO make GUI
-        like
-        [Listening...]
-        """
-        clf.connect(rdwr={'on-connect': self.on_connect})
-        clf.close()
+    def read(self, client, server, message):
+        if(message == "client_ready"):
+            clf = nfc.ContactlessFrontend('usb')
+            server.send_message_to_all("listening")  # Listening Tag...
+            print("Touch me")
+            """
+                TODO make GUI
+                like
+                [Listening...]
+                """
+            clf.connect(rdwr={'on-connect': self.on_connect})
+            clf.close()
+        else:
+            server.send("other_error")
 
     def on_connect(self, tag):
         tagID = str(binascii.hexlify(tag._nfcid))
@@ -33,16 +36,16 @@ class CardReader(Reader):
 
         if(self.convert_IDm()):
             # Sending to server...
-            server.send_message_to_all("1")
+            server.send_message_to_all("sending")
         else:
             # This tag does not much any member
-            server.send_message_to_all("4")
+            server.send_message_to_all("incorrect_tag")
         if(self.recordMemberID()):
             # Record succeed!
-            server.send_message_to_all("2")
+            server.send_message_to_all("record_succeed")
         else:
             # Record Error
-            server.send_message_to_all("5")
+            server.send_message_to_all("other_error")
         return True
 
     def convert_IDm(self):
@@ -71,5 +74,5 @@ class CardReader(Reader):
 if __name__ == '__main__':
     cr = CardReader()
     server = WebsocketServer(9999, host="localhost")
-    server.set_fn_new_client(cr.read)
+    server.set_fn_message_received(cr.read)
     server.run_forever()
