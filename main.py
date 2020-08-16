@@ -46,6 +46,9 @@ class CardReader(Reader):
         else:
             # Record Error
             server.send_message_to_all("other_error")
+        self.convert_IDm = ""
+        self.memberID = ""
+        self.tagIDbeforeConvert = ""
         return True
 
     def convert_IDm(self):
