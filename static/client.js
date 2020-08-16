@@ -4,10 +4,9 @@ window.onload = async () => {
         console.log("connected");
         $("#listening").css("display", "block");
         socket.send("client_ready");
-        console.log("client_ready");
     });
     socket.addEventListener('message', function (event) {
-        console.log(event.data);
+        console.log(event.data)
         $(".components").css("display", "none");
         switch (event.data) {
             case "listening":
@@ -32,6 +31,12 @@ window.onload = async () => {
                 $("#other_error").css("display", "block");
                 drawingOut();
                 break;
+            case "touch_again":
+                socket.send("client_ready");
+                break;
+            case "regist_succeed":
+                drawingOut();
+                break;
             default:
                 console.log("Something Wrong...");
                 console.log(event.data);
@@ -39,6 +44,6 @@ window.onload = async () => {
         }
     });
     function drawingOut() {
-        setTimeout(socket.send("client_ready"), 1500);
+        socket.send("client_ready");
     }
 }

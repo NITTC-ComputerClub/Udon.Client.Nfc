@@ -7,38 +7,30 @@ from websocket_server import WebsocketServer
 
 
 class CardRegister(Reader):
-    def read(self, client, server, message):
-        if(message == "client_ready"):
-            clf = nfc.ContactlessFrontend('usb')
-            server.send_message_to_all("listening")  # Listening Tag...
-            print("Touch me")
-            """
-                TODO make GUI
-                like
-                [Listening...]
-                """
-            clf.connect(rdwr={'on-connect': self.on_connect})
-            clf.close()
-        else:
-            server.send("other_error")
+    def __init__(self):
+        self.firstTouch = True
 
     def on_connect(self, tag):
-        super().on_connect(tag)
-        server.send_message_to_all("touch_again")
-        clf.connect(rdwr={'on-connect': self.eliminateRandomTag})
-        return True
-
-    def eliminateRandomTag(self, tag):
-        if(tag._nfcid == self.tagIDbeforeConvert):
-            server.send_message_to_all("regist_succeed")
-            self.registNewTag(tag)
+        if(self.firstTouch):
+            super().on_connect(tag)
+            self.firstTouch = False
+            server.send_message_to_all("touch_again")
         else:
-            server.send_message_to_all("regist_error")
+            print(self.tagIDbeforeConvert)
+            print(str(binascii.hexlify(tag._nfcid)))
+            if(self.tagIDbeforeConvert == str(binascii.hexlify(tag._nfcid))):
+                server.send_message_to_all("registing")
+                self.registNewTag()
+            else:
+                server.send_message_to_all("cannot_regist_this_tag")
+            self.firstTouch = True
         return True
 
-    def registNewTag(self, tag):
+    def registNewTag(self):
         newTagID = self.tagIDbeforeConvert
+        # ask member name
         # regist new tag
+        server.send_message_to_all("regist_succeed")
 
 
 if __name__ == '__main__':

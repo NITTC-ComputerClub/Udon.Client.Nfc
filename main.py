@@ -9,6 +9,7 @@ from websocket_server import WebsocketServer
 
 class Reader:
     def read(self, client, server, message):
+        print(message)
         if(message == "client_ready"):
             clf = nfc.ContactlessFrontend('usb')
             server.send_message_to_all("listening")  # Listening Tag...
