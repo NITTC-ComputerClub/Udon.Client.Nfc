@@ -2,11 +2,25 @@ import json
 import nfc
 import binascii
 import os
-from main import Reader
+from main import CardReader
 from websocket_server import WebsocketServer
+import collections as cl
 
 
 class CardRegister(CardReader):
+    def read(self, client, server, message):
+        print(message)
+        if(message == "client_ready"):
+            clf = nfc.ContactlessFrontend('usb')
+            server.send_message_to_all("listening")  # Listening Tag...
+            print("Touch me")
+            clf.connect(rdwr={'on-connect': self.on_connect})
+            clf.close()
+        elif(message[:6] == "member"):
+            self.memberName = message[5:]
+        else:
+            server.send_message_to_all("other_error")
+
     def __init__(self):
         self.firstTouch = True
 
@@ -27,14 +41,33 @@ class CardRegister(CardReader):
         return True
 
     def registNewTag(self):
-        newTagID = self.tagIDbeforeConvert
-        # ask member name
-        # regist new tag
-        server.send_message_to_all("regist_succeed")
+        with open("database/members.json") as f:
+            memberJson = json.load(f)
+            newTagID = self.tagIDbeforeConvert
+            if(hasattr(self, "memberName") and self.memberName != ""):
+                try:
+                    memberJson[self.memberName]["IDm"].append(newTagID)
+                    json.dump(memberJson, f)
+                    server.send_message_to_all("regist_succeed")
+                except Exception as e:
+                    print(e)
+                    server.send_message_to_all("regist_error")
+            else:
+                server.send_message_to_all("regist_error")
 
 
-if __name__ == '__main__':
+def sendMemberList(client, server):
+    memberList = "member-list"
+    with open("database/members.json") as f:
+        memberJson = json.load(f)
+        for i in memberJson:
+            memberList += i["name"]+","
+    server.send_message_to_all(memberList)
+
+
+if __name__ == "__main__":
     register = CardRegister()
     server = WebsocketServer(9999, host="localhost")
+    server.set_fn_new_client(sendMemberList)
     server.set_fn_message_received(register.read)
     server.run_forever()

@@ -14,11 +14,6 @@ class CardReader:
             clf = nfc.ContactlessFrontend('usb')
             server.send_message_to_all("listening")  # Listening Tag...
             print("Touch me")
-            """
-                TODO make GUI
-                like
-                [Listening...]
-                """
             clf.connect(rdwr={'on-connect': self.on_connect})
             clf.close()
         else:
