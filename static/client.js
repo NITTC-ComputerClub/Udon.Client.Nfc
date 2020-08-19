@@ -1,11 +1,14 @@
-window.onload = async () => {
-    const socket = await new WebSocket("ws://localhost:9999/");
-    socket.addEventListener('open', function (event) {
+window.onload = function () {
+    const socket = new WebSocket("ws://localhost:9999/");
+    socket.onerror = function () {
+        $("#ws_error").css("display", "block");
+    }
+    socket.onopen = function (event) {
         console.log("connected");
         $("#listening").css("display", "block");
         socket.send("client_ready");
-    });
-    socket.addEventListener('message', function (event) {
+    };
+    socket.onmessage = function (event) {
         console.log(event.data)
         $(".components").css("display", "none");
         switch (event.data) {
@@ -51,7 +54,7 @@ window.onload = async () => {
                 console.log(event.data);
                 drawingOut();
         }
-    });
+    };
     function drawingOut() {
         socket.send("client_ready");
     }
