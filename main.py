@@ -7,7 +7,7 @@ import urllib.parse
 from websocket_server import WebsocketServer
 
 
-class Reader:
+class CardReader:
     def read(self, client, server, message):
         print(message)
         if(message == "client_ready"):
@@ -31,7 +31,7 @@ class Reader:
         return True
 
 
-class CardReader(Reader):
+class Recorder(CardReader):
     def on_connect(self, tag):
         super().on_connect(tag)
 
@@ -75,7 +75,7 @@ class CardReader(Reader):
 
 
 if __name__ == '__main__':
-    cr = CardReader()
+    recorder = Recorder()
     server = WebsocketServer(9999, host="localhost")
-    server.set_fn_message_received(cr.read)
+    server.set_fn_message_received(recorder.read)
     server.run_forever()

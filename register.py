@@ -6,7 +6,7 @@ from main import Reader
 from websocket_server import WebsocketServer
 
 
-class CardRegister(Reader):
+class CardRegister(CardReader):
     def __init__(self):
         self.firstTouch = True
 
