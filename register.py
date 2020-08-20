@@ -12,7 +12,8 @@ class CardRegister(CardReader):
         print(message)
         if(message[:6] == "member"):
             self.memberName = message[5:]
-        elif (message == "client_ready")
+        elif (message == "client_ready"):
+            pass
         else:
             server.send_message_to_all("other_error")
             return True
