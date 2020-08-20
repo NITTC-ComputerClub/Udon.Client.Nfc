@@ -5,7 +5,6 @@ window.onload = function () {
     }
     socket.onopen = function (event) {
         console.log("connected");
-        $("#select_user").css("display", "block");
     };
     socket.onmessage = function (event) {
         console.log(event.data)
@@ -17,6 +16,7 @@ window.onload = function () {
             memberList.forEach(element => {
                 $("#memberList").append("<option value = " + element + ">" + element + "</option>");
             });
+            $("#select_user").css("display", "block");
         }
         else {
             switch (event.data) {
