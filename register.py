@@ -10,14 +10,13 @@ import collections as cl
 class CardRegister(CardReader):
     def read(self, client, server, message):
         print(message)
-        if(message == "client_ready"):
+        if(message[:6] == "member"):
+            self.memberName = message[5:]
             clf = nfc.ContactlessFrontend('usb')
             server.send_message_to_all("listening")  # Listening Tag...
             print("Touch me")
             clf.connect(rdwr={'on-connect': self.on_connect})
             clf.close()
-        elif(message[:6] == "member"):
-            self.memberName = message[5:]
         else:
             server.send_message_to_all("other_error")
 

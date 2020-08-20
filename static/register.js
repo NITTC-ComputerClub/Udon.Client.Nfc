@@ -54,14 +54,8 @@ window.onload = function () {
             }
         }
     };
-    $("#memberSelectButton").click(() => {
-        const name = $("#memberList").val();
-        socket.send("member"+name.toString());
-	console.log("member"+name.toString());
-    });
     $("#registStart").click(() => {
-        socket.send("client_ready");
-	
+        socket.send("member" + name.toString());
     })
     function drawingOut() {
         window.memberList.forEach(element => {
