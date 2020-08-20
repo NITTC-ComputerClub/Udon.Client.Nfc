@@ -12,7 +12,7 @@ class CardRegister(CardReader):
         print(message)
         if(message[:7] == "member:"):
             self.memberName = message[7:]
-            print(message[5:])
+            print(message[7:])
         elif (message == "client_ready"):
             pass
         else:
