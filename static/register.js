@@ -11,6 +11,7 @@ window.onload = function () {
         $(".components").css("display", "none");
         if (event.data.substr(0, 11) === "member-list") {
             memberList = event.data.substr(11).split(",");
+	    memberList.sort()
             window.memberList = memberList
             memberList.forEach(element => {
                 $("#memberList").append("<option value = " + element + ">" + element + "</option>");
@@ -60,8 +61,6 @@ window.onload = function () {
         console.log("member:" + name);
     })
     function drawingOut() {
-        window.memberList.forEach(element => {
-            $("#memberList").append("<option value = " + element + ">" + element + "</option>");
-        });
+       
     }
 }
