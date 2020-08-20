@@ -12,13 +12,15 @@ class CardRegister(CardReader):
         print(message)
         if(message[:6] == "member"):
             self.memberName = message[5:]
-            clf = nfc.ContactlessFrontend('usb')
-            server.send_message_to_all("listening")  # Listening Tag...
-            print("Touch me")
-            clf.connect(rdwr={'on-connect': self.on_connect})
-            clf.close()
+        elif (message == "client_ready")
         else:
             server.send_message_to_all("other_error")
+            return True
+        clf = nfc.ContactlessFrontend('usb')
+        server.send_message_to_all("listening")  # Listening Tag...
+        print("Touch me")
+        clf.connect(rdwr={'on-connect': self.on_connect})
+        clf.close()
 
     def __init__(self):
         self.firstTouch = True
