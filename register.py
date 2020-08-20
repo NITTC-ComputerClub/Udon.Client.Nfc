@@ -10,8 +10,8 @@ import collections as cl
 class CardRegister(CardReader):
     def read(self, client, server, message):
         print(message)
-        if(message[:6] == "member"):
-            self.memberName = message[5:]
+        if(message[:7] == "member:"):
+            self.memberName = message[7:]
             print(message[5:])
         elif (message == "client_ready"):
             pass

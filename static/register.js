@@ -55,8 +55,9 @@ window.onload = function () {
         }
     };
     $("#registStart").click(() => {
-        socket.send("member" + name.toString());
-        console.log("member" + name.toString());
+        const name = $("#title").val();
+        socket.send("member:" + name.toString());
+        console.log("member:" + name.toString());
     })
     function drawingOut() {
         window.memberList.forEach(element => {
