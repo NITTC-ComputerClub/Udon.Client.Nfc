@@ -42,15 +42,21 @@ lsusb
 ```
 みたいに認識されてたらOKです  
 
-## システム起動
+## 手動システム起動
 ```
-python3 main.py
+sh main.sh
 ```
 
 ## 新規タグ登録
 ```
-python3 register.py
+sh register.sh
 ```
 
 ## 注意点
 - python2系での動作は保証されません、必ずpython**3**コマンドで実行してください。
+- 起動用のシェルスクリプトは初回だと権限で弾かれると思うので、
+```
+chmod 755 main.sh
+chmod 755 register.sh
+```
+とかすると通ると思います
