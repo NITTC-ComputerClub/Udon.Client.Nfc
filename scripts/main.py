@@ -29,7 +29,6 @@ class CardReader:
 class Recorder(CardReader):
     def on_connect(self, tag):
         super().on_connect(tag)
-
         if(self.convert_IDm()):
             # Sending to server...
             server.send_message_to_all("sending")
@@ -49,13 +48,14 @@ class Recorder(CardReader):
 
     def convert_IDm(self):
         IDbeforeConvert = self.tagIDbeforeConvert
-        f = open("database/members.json", "w")
+        f = open("database/members.json", "r")
         memberData = json.load(f)
         f.close()
         for member in memberData:
             for i in member["IDm"]:
                 if(i == IDbeforeConvert):
                     self.memberID = member["id"]
+                    print(member["name"])
                     return True
         return False  # if does not much any tag
 
