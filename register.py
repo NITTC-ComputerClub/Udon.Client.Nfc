@@ -49,17 +49,13 @@ class CardRegister(CardReader):
             newTagID = self.tagIDbeforeConvert
             if(hasattr(self, "memberName") and self.memberName != ""):
                 try:
-                    cnt = 0
-                    tmp = ""
                     for i in memberJson:
-                        cnt+=1
                         if(i["name"] == self.memberName):
                             tmp = i["IDm"]
                             tmp.append(newTagID)
                             i["IDm"]= tmp
                             print(tmp)
                             break
-                    memberJson[cnt]["IDm"]=tmp
                     print(memberJson)
                     with open ("database/members.json","w") as fw:
                         json.dump(memberJson,fw)
