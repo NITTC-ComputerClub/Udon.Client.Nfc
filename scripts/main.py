@@ -33,26 +33,31 @@ class Recorder(CardReader):
         if(self.convert_IDm()):
             # Sending to server...
             server.send_message_to_all("sending")
+            if(self.recordMemberID()):
+                # Record succeed!
+                server.send_message_to_all("record_succeed")
+            else:
+                # Record Error
+                server.send_message_to_all("other_error")
         else:
             # This tag does not much any member
             server.send_message_to_all("incorrect_tag")
-        if(self.recordMemberID()):
-            # Record succeed!
-            server.send_message_to_all("record_succeed")
-        else:
-            # Record Error
-            server.send_message_to_all("other_error")
+
         self.memberID = ""
         self.tagIDbeforeConvert = ""
         return True
 
     def convert_IDm(self):
         IDbeforeConvert = self.tagIDbeforeConvert
-        convertedID = ""
-        # convert from IDm to memberID
-        # if does not much any member return False
-        self.memberID = convertedID
-        return True
+        f = open("database/members.json", "w")
+        memberData = json.load(f)
+        f.close()
+        for member in memberData:
+            for i in member["IDm"]:
+                if(i == IDbeforeConvert):
+                    self.memberID = member["id"]
+                    return True
+        return False  # if does not much any tag
 
     def recordMemberID(self):
         UdonURL = ""  # Udon API Server
