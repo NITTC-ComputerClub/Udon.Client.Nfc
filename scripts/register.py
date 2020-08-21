@@ -44,7 +44,7 @@ class CardRegister(CardReader):
         return True
 
     def registNewTag(self):
-        with open("database/members.json","r") as f:
+        with open("../database/members.json", "r") as f:
             memberJson = json.load(f)
             newTagID = self.tagIDbeforeConvert
             if(hasattr(self, "memberName") and self.memberName != ""):
@@ -53,27 +53,26 @@ class CardRegister(CardReader):
                         if(i["name"] == self.memberName):
                             tmp = i["IDm"]
                             tmp.append(newTagID)
-                            i["IDm"]= tmp
+                            i["IDm"] = tmp
                             print(tmp)
                             break
                     print(memberJson)
-                    with open ("database/members.json","w") as fw:
-                        json.dump(memberJson,fw)
+                    with open("../database/members.json", "w") as fw:
+                        json.dump(memberJson, fw)
                     server.send_message_to_all("regist_succeed")
                     f.close()
                 except Exception as e:
                     print(e)
                     server.send_message_to_all("regist_error")
-                
+
             else:
                 print("Unknown Error")
                 server.send_message_to_all("regist_error")
-           
 
 
 def sendMemberList(client, server):
     memberList = "member-list"
-    with open("database/members.json") as f:
+    with open("../database/members.json") as f:
         memberJson = json.load(f)
         for i in memberJson:
             memberList += i["name"]+","
