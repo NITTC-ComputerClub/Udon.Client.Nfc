@@ -4,7 +4,6 @@ import binascii
 import os
 from main import CardReader
 from websocket_server import WebsocketServer
-import collections as cl
 
 
 class CardRegistrar(CardReader):
@@ -49,9 +48,11 @@ class CardRegistrar(CardReader):
             newTagID = self.tagIDbeforeConvert
             for element in memberJson:  # check this card does not link any users yet
                 for i in element["IDm"]:
+                    print(i)
                     if(i == newTagID):
+                        print("this card already linked someone")
                         server.send_message_to_all("register_error")
-                        break
+                        return True
             if(hasattr(self, "memberName") and self.memberName != ""):
                 try:
                     for i in memberJson:
