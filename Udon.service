@@ -1,0 +1,10 @@
+[Unit]
+Description = ComputerClub Attendance Management System
+
+[Service]
+ExecStart=/home/pi/Desktop/Git/Udon.Client.Nfc/main.sh
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
