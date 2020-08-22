@@ -60,3 +60,23 @@ chmod 755 main.sh
 chmod 755 register.sh
 ```
 とかすると通ると思います
+- 特に手動で止める機会はないと思いますが、  
+Ctrl + cしても止まらないので
+```
+ps u
+```
+を叩いて
+```
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+pi         727  0.0  0.2   6992  2572 tty1     S+   13:33   0:00 -bash
+pi        1785  0.0  0.3   7016  3232 pts/0    Ss   13:45   0:00 bash
+pi        2229  3.7  1.7  41636 16236 pts/0    Sl   13:48   0:00 python3 ./scripts/main.py
+pi        2404  0.0  0.2   8288  2532 pts/0    R+   13:48   0:00 ps u
+
+```
+で出たプロセスを
+```
+kill 2229
+```
+とかしてください 
+
