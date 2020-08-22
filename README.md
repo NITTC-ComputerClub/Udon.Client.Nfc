@@ -49,7 +49,7 @@ sh main.sh
 
 ## 新規タグ登録
 ```
-sh register.sh
+sh registrar.sh
 ```
 
 ## 注意点
@@ -57,7 +57,7 @@ sh register.sh
 - 起動用のシェルスクリプトは初回だと権限で弾かれると思うので、
 ```
 chmod 755 main.sh
-chmod 755 register.sh
+chmod 755 registrar.sh
 ```
 とかすると通ると思います
 - 特に手動で止める機会はないと思いますが、  
