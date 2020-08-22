@@ -47,6 +47,11 @@ class CardRegistrar(CardReader):
         with open("database/members.json", "r") as f:
             memberJson = json.load(f)
             newTagID = self.tagIDbeforeConvert
+            for element in memberJson:  # check this card does not link any users yet
+                for i in element["IDm"]:
+                    if(i == newTagID):
+                        server.send_message_to_all("register_error")
+                        break
             if(hasattr(self, "memberName") and self.memberName != ""):
                 try:
                     for i in memberJson:
@@ -56,11 +61,9 @@ class CardRegistrar(CardReader):
                             i["IDm"] = tmp
                             print(tmp)
                             break
-                    print(memberJson)
                     with open("database/members.json", "w") as fw:
                         json.dump(memberJson, fw)
                     server.send_message_to_all("register_succeed")
-                    f.close()
                 except Exception as e:
                     print(e)
                     server.send_message_to_all("register_error")
