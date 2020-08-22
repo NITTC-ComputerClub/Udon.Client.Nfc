@@ -44,12 +44,12 @@ lsusb
 
 ## 手動システム起動
 ```
-sh main.sh
+./main.sh
 ```
 
 ## 新規タグ登録
 ```
-sh registrar.sh
+./registrar.sh
 ```
 
 ## 注意点
