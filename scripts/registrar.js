@@ -38,15 +38,15 @@ window.onload = function () {
                     $("#touch_again").css("display", "block");
                     socket.send("client_ready");
                     break;
-                case "registing":
+                case "registering":
                     $("#sending").css("display", "block");
                     break;
-                case "regist_succeed":
-                    $("#regist_succeed").css("display", "block");
+                case "register_succeed":
+                    $("#register_succeed").css("display", "block");
                     drawingOut();
                     break;
-                case "regist_error":
-                    $("#regist_error").css("display", "block");
+                case "register_error":
+                    $("#register_error").css("display", "block");
                     drawingOut();
                     break;
                 default:
@@ -56,7 +56,7 @@ window.onload = function () {
             }
         }
     };
-    $("#registStart").click(() => {
+    $("#registerStart").click(() => {
         const name = $("#memberList").val();
         socket.send("member:" + name);
         console.log("member:" + name);

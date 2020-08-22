@@ -7,7 +7,7 @@ from websocket_server import WebsocketServer
 import collections as cl
 
 
-class CardRegister(CardReader):
+class CardRegistrar(CardReader):
     def read(self, client, server, message):
         print(message)
         if(message[:7] == "member:"):
@@ -36,10 +36,10 @@ class CardRegister(CardReader):
             print(self.tagIDbeforeConvert)
             print(str(binascii.hexlify(tag._nfcid)))
             if(self.tagIDbeforeConvert == str(binascii.hexlify(tag._nfcid))):
-                server.send_message_to_all("registing")
+                server.send_message_to_all("registering")
                 self.registNewTag()
             else:
-                server.send_message_to_all("regist_error")
+                server.send_message_to_all("register_error")
             self.firstTouch = True
         return True
 
@@ -59,15 +59,15 @@ class CardRegister(CardReader):
                     print(memberJson)
                     with open("database/members.json", "w") as fw:
                         json.dump(memberJson, fw)
-                    server.send_message_to_all("regist_succeed")
+                    server.send_message_to_all("register_succeed")
                     f.close()
                 except Exception as e:
                     print(e)
-                    server.send_message_to_all("regist_error")
+                    server.send_message_to_all("register_error")
 
             else:
                 print("Unknown Error")
-                server.send_message_to_all("regist_error")
+                server.send_message_to_all("register_error")
 
 
 def sendMemberList(client, server):
@@ -80,8 +80,8 @@ def sendMemberList(client, server):
 
 
 if __name__ == "__main__":
-    register = CardRegister()
+    registrar = CardRegistrar()
     server = WebsocketServer(9999, host="localhost")
     server.set_fn_new_client(sendMemberList)
-    server.set_fn_message_received(register.read)
+    server.set_fn_message_received(registrar.read)
     server.run_forever()
