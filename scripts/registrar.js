@@ -14,7 +14,7 @@ window.onload = function () {
             memberList.sort();
             window.memberList = memberList;
             memberList.forEach(element => {
-                $("#memberList").append("<option value = " + element + ">" + element + "</option>");
+                $("#memberList").append("<option class=\"list-group-item\" value = " + element + ">" + element + "</option>");
             });
             $("#select_user").css("display", "block");
         }
