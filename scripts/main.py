@@ -2,8 +2,8 @@ import nfc
 import binascii
 import os
 import json
-import urllib.request
-import urllib.parse
+import requests
+import time
 from websocket_server import WebsocketServer
 
 
@@ -57,10 +57,24 @@ class Recorder(CardReader):
                     self.memberID = member["id"]
                     print(member["name"])
                     return True
-        return False  # if does not much any tag
-
+        return False  # if it does not much any tag
+    
+    def getToken(self):
+        with open("token.json") as j:
+            lastToken = json.load(j)
+            if(time.time()>lastToken.expirationDate): #expired
+                val = {
+                    "ClientId":"",
+                    "ClientToken":""
+                }
+                r=requests.post("",data=)
+                return
+            else:   #return last token
+                return lastToken.token
     def recordMemberID(self):
         UdonURL = ""  # Udon API Server
+        token=self.getToken()
+        
         """values = {
             "client": os.environ["Client_ID"],  # TODO set client id
             "member": self.memberID
