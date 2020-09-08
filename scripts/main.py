@@ -11,10 +11,10 @@ class CardReader:
     def read(self, client, server, message):
         print(message)
         if(message == "client_ready"):
-            clf = nfc.ContactlessFrontend('usb')
+            clf = nfc.ContactlessFrontend("usb")
             server.send_message_to_all("listening")  # Listening Tag...
             print("Touch me")
-            clf.connect(rdwr={'on-connect': self.on_connect})
+            clf.connect(rdwr={"on-connect": self.on_connect})
             clf.close()
         else:
             server.send("other_error")
@@ -60,35 +60,49 @@ class Recorder(CardReader):
         return False  # if it does not much any tag
     
     def getToken(self):
-        with open("token.json") as j:
+        with open("database/token.json","r") as j:
             lastToken = json.load(j)
-            if(time.time()>lastToken.expirationDate): #expired
-                val = {
-                    "ClientId":"",
-                    "ClientToken":""
-                }
-                r=requests.post("",data=)
-                return
-            else:   #return last token
-                return lastToken.token
+        if(time.time()>lastToken.expirationDate): #expired
+            data={
+                "clientId":,    #os.environ("")
+                "clientSecret":
+            }
+            r=requests.post("https://https://udon.nittc-programming.club/clients/token",
+            json.dumps(data),
+            headers={
+                "Content-Type": "application/json"
+            })
+            token=r.json().token
+            exDate= "" #encode token and set expirationDate
+            data={
+                "token":token,
+                "expirationDate":
+            }
+            with open ("database/token.json","w") as jw:
+                json.dump(data,jw)
+            return token
+        else:   #return last token
+            return lastToken.token
+
     def recordMemberID(self):
-        UdonURL = ""  # Udon API Server
         token=self.getToken()
-        
-        """values = {
-            "client": os.environ["Client_ID"],  # TODO set client id
-            "member": self.memberID
+        data = {
+            "memberId":self.memberID
         }
-        data = urllib.parse.urlencode(values)
-        req = urllib.request.Request(UdonURL, data)
-        with urllib.request.urlopen(UdonURL, data=req) as res:
-            print(res.read)  # TODO read Status Code and output something
-            # If error occured,return False
-        """
-        return True
+        r = requests.post("https://https://udon.nittc-programming.club/record",
+            json.dumps(data),
+            headers={
+                    "Content-Type": "application/json"
+                    "Authorization":"Bearer {token}".format(token=token)
+            })
+        if(r.statusCode==200):
+            return True
+        else:
+            print(r.json())
+            return False
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     recorder = Recorder()
     server = WebsocketServer(9999, host="localhost")
     server.set_fn_message_received(recorder.read)
