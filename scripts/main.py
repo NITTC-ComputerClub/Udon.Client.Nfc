@@ -6,7 +6,6 @@ import requests
 import time
 from websocket_server import WebsocketServer
 
-
 class CardReader:
     def read(self, client, server, message):
         print(message)
@@ -46,18 +45,6 @@ class Recorder(CardReader):
         self.tagIDbeforeConvert = ""
         return True
 
-    def convert_IDm(self):
-        IDbeforeConvert = self.tagIDbeforeConvert
-        f = open("database/members.json", "r")
-        memberData = json.load(f)
-        f.close()
-        for member in memberData:
-            for i in member["IDm"]:
-                if(i == IDbeforeConvert):
-                    self.memberID = member["id"]
-                    print(member["name"])
-                    return True
-        return False  # if it does not much any tag
     
     def getToken(self):
         with open("database/token.json","r") as j:
