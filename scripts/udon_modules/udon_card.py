@@ -12,7 +12,8 @@ def begin_reading():
 
 def on_connect(tag):
     IDm = str(binascii.hexlify(tag._nfcid))
-    print("IDm : {IDm}".format(IDm=tagID))
+    print("IDm : {IDm}".format(IDm=IDm))
     member_id = udon_db.tomember(IDm)
-    udon_api.record_attendance(member_id)
+    #udon_api.record_attendance(member_id)
+    print("record succeed")
     return True

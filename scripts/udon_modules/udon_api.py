@@ -6,8 +6,8 @@ def get_token():
             lastToken = json.load(j)
         if(time.time()>lastToken.expirationDate): #expired
             data={
-                "clientId":,    #os.environ("")
-                "clientSecret":
+                #"clientId":,    #os.environ("")
+                #"clientSecret":
             }
             r=requests.post("https://https://udon.nittc-programming.club/clients/token",
             json.dumps(data),
@@ -19,7 +19,7 @@ def get_token():
             expiratoin_date= "" #encode token and set expirationDate
             data={
                 "token":token,
-                "expirationDate":
+                "expirationDate":expiratoin_date
             }
             with open ("database/token.json","w") as jw:
                 json.dump(data,jw)
@@ -36,7 +36,7 @@ def record_attendance(memberID):
         json.dumps(data),
         headers={
                 "Content-Type": "application/json"
-                "Authorization":"Bearer {token}".format(token=token)
+                "Authorization Bearer {token}".format(token=token)
         })
     if(r.statusCode==200):
         return True

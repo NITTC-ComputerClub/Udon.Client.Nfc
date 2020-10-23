@@ -1,3 +1,4 @@
+import json
 def tomember(IDm):
         f = open("database/members.json", "r")
         memberData = json.load(f)
