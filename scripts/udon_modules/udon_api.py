@@ -1,7 +1,7 @@
 import json
 import requests
 
-def getToken():
+def get_token():
         with open("database/token.json","r") as j:
             lastToken = json.load(j)
         if(time.time()>lastToken.expirationDate): #expired
@@ -27,18 +27,19 @@ def getToken():
         else:   #return last token
             return lastToken.token
 
-def recordMemberID(token,memberID):
-        data = {
-            "memberId":memberID
-        }
-        r = requests.post("https://https://udon.nittc-programming.club/record",
-            json.dumps(data),
-            headers={
-                    "Content-Type": "application/json"
-                    "Authorization":"Bearer {token}".format(token=token)
-            })
-        if(r.statusCode==200):
-            return True
-        else:
-            print(r.json())
-            return False
+def record_attendance(memberID):
+    token = getToken()
+    data = {
+        "memberId":memberID
+    }
+    r = requests.post("https://https://udon.nittc-programming.club/record",
+        json.dumps(data),
+        headers={
+                "Content-Type": "application/json"
+                "Authorization":"Bearer {token}".format(token=token)
+        })
+    if(r.statusCode==200):
+        return True
+    else:
+        print(r.json())
+        return False
