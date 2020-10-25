@@ -24,17 +24,15 @@ def on_attendance(tag):
 
 #registrar
 
-def begin_register_reading():
+def begin_register_reading(member_id):
     print("Listening")
-    clf.connect(rdwr={"on-connect": on_register})
+    clf.connect(rdwr={"on-connect": on_register(member_id)})
     return udon_status
-    
-def on_register(tag):
-    tag2 = clf.connect(rdwr={'on-connect': lambda tag2: False})
-    print(tag2)
-    if(tag._nfcid == tag2._nfcid):
-        print("Valid")
-        #udon_db.register_newtag(member_id,IDm)
+
+def on_register(card,member_id):
+    card2 = clf.connect(rdwr={'on-connect': lambda card2: False})
+    if(card._nfcid == card2._nfcid):
+        udon_status = udon_db.register_newcard(member_id,card._nfcid)
     else:
-        print("Invalid")
+        udon_status = "unavailable_card"
     return True

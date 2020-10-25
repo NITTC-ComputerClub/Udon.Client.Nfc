@@ -48,8 +48,8 @@
                     <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z" />
                 </svg>
             </div>
-            <p class="title">カードを待機しています</p>
-            <p class="addendum">リーダ・ライタにかざしてください</p>
+            <p class="title">2回タッチしてください</p>
+            <p class="addendum">使用可能か確認します</p>
         </div>
         <div id="sending" class="components">
             <div class="row">
@@ -76,7 +76,7 @@
             <p class="title">カードを確認します</p>
             <p class="addendum">もう１度かざしてください</p>
         </div>
-        <div id="register_error" class="components">
+        <div id="unavailable_card" class="components">
             <svg width="30vw" height="30vw" viewBox="0 0 16 16" class="bi bi-x-circle error_icon col"
                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -112,7 +112,7 @@
             <p class="title">インターネットに接続されていません</p>
             <p class="addendum">今は打刻できません</p>
         </div>
-        <div id="other_error" class="components">
+        <div id="internal_error" class="components">
             <div class="row">
                 <svg width="30vw" height="30vw" viewBox="0 0 16 16" class="bi bi-x-circle error_icon col"
                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -158,7 +158,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="js/clients.js"></script>
+    <script src="js/registrar.js"></script>
 </body>
 
 </html>

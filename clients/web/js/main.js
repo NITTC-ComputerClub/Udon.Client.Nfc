@@ -1,5 +1,3 @@
-eel.expose(changeDisplay);
-
 function changeDisplay(elementId){
     $(".components").css("display","none");
     $(`#${elementId}`).css("display","block");
