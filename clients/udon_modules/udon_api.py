@@ -1,7 +1,7 @@
 import json
 import requests
-from udon_modules import udon_gui
-def get_token():
+
+def get_token():k
         with open("database/token.json","r") as j:
             lastToken = json.load(j)
         if(time.time()>lastToken.expirationDate): #expired
@@ -28,7 +28,6 @@ def get_token():
             return lastToken.token
 
 def record_attendance(memberID):
-    udon_gui.changeto("sending")
     token = getToken()
     data = {
         "memberId":memberID

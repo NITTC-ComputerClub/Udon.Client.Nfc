@@ -3,7 +3,6 @@ import binascii
 import os
 import json
 from udon_modules import udon_db
-from udon_modules import udon_gui
 
 clf = nfc.ContactlessFrontend("usb")
 udon_status = ""
@@ -17,9 +16,7 @@ def on_attendance(tag):
     IDm = str(binascii.hexlify(tag._nfcid))
     print("IDm : {IDm}".format(IDm=IDm))
     member_id = udon_db.tomember(IDm)
-    #if(udon_api.record_attendance(member_id)):
-    udon_status = "record_succeed"
-    print("record succeed")
+    udon_status = udon_api.record_attendance(member_id)
     return True
 
 #registrar
