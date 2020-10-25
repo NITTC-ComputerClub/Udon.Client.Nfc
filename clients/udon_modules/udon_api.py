@@ -4,8 +4,8 @@ import os
 
 def get_token():
         with open("database/token.json","r") as j:
-            lastToken = json.load(j)
-        if(time.time()>lastToken.expirationDate): #on expired
+            last_token = json.load(j)
+        if(time.time()>last_token.expirationDate): #on expired
             data={
                 #"clientId":os.environ(""),
                 #"clientSecret":
@@ -27,12 +27,12 @@ def get_token():
                 json.dump(data,jw)
             return token
         else:  
-            return lastToken.token
+            return last_token.token
 
-def record_attendance(memberID):
-    token = getToken()
+def record_attendance(member_id):
+    token = get_token()
     data = {
-        "memberId":memberID
+        "memberId":member_id
     }
     r = requests.post("https://https://udon.nittc-programming.club/record",
         json.dumps(data),
