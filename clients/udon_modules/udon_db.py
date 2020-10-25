@@ -1,6 +1,6 @@
 import json
 def tomember(IDm):
-        f = open("database/members.json", "r")
+        f = open("../database/members.json", "r")
         members_data = json.load(f)
         f.close()
         for member in members_data:

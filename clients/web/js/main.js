@@ -1,5 +1,15 @@
 eel.expose(changeDisplay);
+
 function changeDisplay(elementId){
-    document.getElementsByClassName("components").style.display="none";
-    document.getElementById(elementId).style.display="block";
+    $(".components").css("display","none");
+    $(`#${elementId}`).css("display","block");
 }
+
+async function start(){
+	changeDisplay("listening");
+	let res = await eel.callme()();
+	changeDisplay("record_succeed")
+	setTimeout(start,1000);
+}
+
+window.onload=start();
