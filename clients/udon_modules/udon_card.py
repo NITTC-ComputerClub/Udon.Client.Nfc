@@ -2,12 +2,16 @@ import nfc
 import binascii
 import os
 import json
+import eel
 from udon_modules import udon_db
+from udon_modules import udon_gui
 
 clf = nfc.ContactlessFrontend("usb")
 
 def begin_attendance_reading():
     print("Listening")
+    udon_gui.init("main")
+    udon_gui.changeto("listening")
     clf.connect(rdwr={"on-connect":on_attendance})
 
 def on_attendance(tag):
