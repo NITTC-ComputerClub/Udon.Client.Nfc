@@ -27,7 +27,8 @@ def on_attendance(tag):
 def begin_register_reading():
     print("Listening")
     clf.connect(rdwr={"on-connect": on_register})
-
+    return udon_status
+    
 def on_register(tag):
     tag2 = clf.connect(rdwr={'on-connect': lambda tag2: False})
     print(tag2)
