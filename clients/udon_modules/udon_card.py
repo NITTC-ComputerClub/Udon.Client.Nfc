@@ -16,7 +16,10 @@ def on_attendance(tag):
     IDm = str(binascii.hexlify(tag._nfcid))
     print("IDm : {IDm}".format(IDm=IDm))
     member_id = udon_db.tomember(IDm)
-    udon_status = udon_api.record_attendance(member_id)
+    if(member_id == ""):
+        udon_status = "unknown_card" 
+    else:
+        udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "internal_error"
     return True
 
 #registrar

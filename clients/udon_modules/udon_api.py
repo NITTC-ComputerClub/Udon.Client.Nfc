@@ -1,22 +1,24 @@
 import json
 import requests
+import os
 
-def get_token():k
+def get_token():
         with open("database/token.json","r") as j:
             lastToken = json.load(j)
-        if(time.time()>lastToken.expirationDate): #expired
+        if(time.time()>lastToken.expirationDate): #on expired
             data={
-                #"clientId":,    #os.environ("")
+                #"clientId":os.environ(""),
                 #"clientSecret":
             }
             r=requests.post("https://https://udon.nittc-programming.club/clients/token",
-            json.dumps(data),
-            headers={
-                "Content-Type": "application/json"
-            })
+                json.dumps(data),
+                headers={
+                    "Content-Type": "application/json"
+                }
+            )
             
             token=r.json().token
-            expiratoin_date= "" #encode token and set expirationDate
+            expiratoin_date= "" #TODO encode token and set expirationDate
             data={
                 "token":token,
                 "expirationDate":expiratoin_date
@@ -24,7 +26,7 @@ def get_token():k
             with open ("database/token.json","w") as jw:
                 json.dump(data,jw)
             return token
-        else:   #return last token
+        else:  
             return lastToken.token
 
 def record_attendance(memberID):
@@ -39,7 +41,7 @@ def record_attendance(memberID):
                 "Authorization Bearer {token}".format(token=token)
         })
     if(r.statusCode==200):
-        return True
+        return "record_succeed"
     else:
         print(r.json())
-        return False
+        return "internal_error"

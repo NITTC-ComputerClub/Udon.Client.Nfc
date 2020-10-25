@@ -7,8 +7,8 @@ function changeDisplay(elementId){
 
 async function start(){
 	changeDisplay("listening");
-	let res = await eel.callme()();
-	changeDisplay("record_succeed")
+	let status = await eel.start_udon()();
+	changeDisplay(status);
 	setTimeout(start,1000);
 }
 
