@@ -15,8 +15,11 @@ def on_attendance(tag):
     print("IDm : {IDm}".format(IDm=IDm))
     member_id = udon_db.tomember(IDm)
     #udon_api.record_attendance(member_id)
+    udon_gui.changeto("record_succeed")
     print("record succeed")
     return True
+
+#registrar
 
 def begin_register_reading():
     print("Listening")
@@ -27,10 +30,7 @@ def on_register(tag):
     print(tag2)
     if(tag._nfcid == tag2._nfcid):
         print("Valid")
-        #udon_db.registrar_newtag(member_id,IDm)
+        #udon_db.register_newtag(member_id,IDm)
     else:
         print("Invalid")
     return True
-
-
-
