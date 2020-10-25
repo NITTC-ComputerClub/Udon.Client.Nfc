@@ -1,20 +1,16 @@
-## これは何
+## 概要
 Udonのクライアントサイド  
 NFC情報を読み取り、サーバーへ送信し認証する
-## 開発時の環境
+## 開発環境
 - PaSoRi(Sony RC-S380)
 - Python 3.7.3
 - pip 18.1
-- Raspberry Pi model 3B(たぶん)
+- Raspberry Pi model 3B
 ### モジュール
 - nfcpy
+- eel
 ## 初期設定
 初期ではsudoしないと使えないが、推奨されないので設定を行う。  
-ホントはrequirements.txtとか書くべきなのでそのうちやります]
-```
-pip3 install nfcpy
-```
-その後、
 ```
 python3 -m nfcpy
 ```
@@ -25,8 +21,8 @@ python3 -m nfcpy
    ATTRS  {idProduct}==\"06c3\", GROUP=\"plugdev\" >> /etc/udev/rules.d/nfcdev.rules'  
    sudo udevadm control -R # then re-attach device  
 ```
-みたいな部分、**表示された**コマンド(sudo -sh c 'echo ...と、sudo udevadm ...)を実行し、PaSoRiを抜き差しする  
-(ここは調べたら再起動とか書いてあったので、ダメならそうしてください)  
+みたいな部分、**表示された**コマンド(sudo -sh c 'echo ...と、sudo udevadm ...)を実行し、  
+PaSoRiを抜き差し、あるいはラズパイを再起動します
 [参考記事](https://qiita.com/irutack/items/61a783eb9d5c78d5a3f6)
 
 ```
@@ -53,13 +49,12 @@ lsusb
 ```
 
 ## 注意点
-- python2系での動作は保証されません、必ずpython**3**コマンドで実行してください。
-- 起動用のシェルスクリプトは初回だと権限で弾かれると思うので、
+- 起動用のシェルスクリプトは初回だと権限のエラーが出るので、
 ```
 chmod 755 main.sh
 chmod 755 registrar.sh
 ```
-とかすると通ると思います
+などで適宜権限を付与してください。
 - 特に手動で止める機会はないと思いますが、  
 Ctrl + cしても止まらないので
 ```
@@ -74,9 +69,9 @@ pi        2229  3.7  1.7  41636 16236 pts/0    Sl   13:48   0:00 python3 ./scrip
 pi        2404  0.0  0.2   8288  2532 pts/0    R+   13:48   0:00 ps u
 
 ```
-で出たプロセスを
+と出たプロセスを
 ```
 kill 2229
 ```
-とかしてください 
+すると止まります。
 
