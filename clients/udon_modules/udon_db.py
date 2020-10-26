@@ -10,7 +10,7 @@ def tomember(IDm):
                     return member["id"]
         return ""  # if does not much any tag
 
-def register_newcard(member_id,new_card):
+def register_newcard(member_name,new_card):
     with open("database/members.json", "r") as f:
             members_data = json.load(f)
             for element in memberJson:  # check this card does not link any users yet
@@ -18,7 +18,7 @@ def register_newcard(member_id,new_card):
                     if(user_card == new_card):
                         return "already_used"
 
-            members_data[member_id]["IDm"].append(new_card)
+            members_data[member_name]["IDm"].append(new_card)
             
             try:
                 with open("database/members.json", "w") as w:
