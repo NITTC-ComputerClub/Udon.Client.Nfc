@@ -3,7 +3,7 @@ import requests
 import os
 
 def get_token():
-        with open("database/token.json","r") as j:
+        with open("../database/token.json","r") as j:
             last_token = json.load(j)
         if(time.time()>last_token.expirationDate): #on expired
             data={

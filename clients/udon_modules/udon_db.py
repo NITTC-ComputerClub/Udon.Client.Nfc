@@ -11,7 +11,7 @@ def tomember(IDm):
         return ""  # if does not much any tag
 
 def register_newcard(member_name,new_card):
-    with open("database/members.json", "r") as f:
+    with open("../database/members.json", "r") as f:
             members_data = json.load(f)
             
             for element in memberJson:  # check this card does not link any users yet
