@@ -18,7 +18,7 @@ def begin_attendance_reading():
     idm= read_idm()
     member_id = udon_db.tomember(idm)
     if(member_id == ""):
-        udon_status = "unknown_card" 
+        udon_status = "unknown_card"
     else:
         udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "internal_error"
     return udon_status
