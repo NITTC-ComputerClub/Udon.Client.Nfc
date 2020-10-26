@@ -12,17 +12,22 @@ def tomember(IDm):
 
 def register_newcard(member_name,new_card):
     try:
+        members_data=""
+        with open("../database/members.json", "r+") as u:
+            members_data = json.load(u)
+        
+        for member in members_data:  # check this card does not link any users yet
+            for user_card in member["IDm"]:
+                if(user_card == new_card):
+                    return "already_used"
+
+        for member in members_data:  # check this card does not link any users yet
+            if(member["name"]==member_name):
+                member["IDm"].append(idm)
+        
         with open("../database/members.json", "w+") as udon_users_data:
-            members_data = json.load(udon_users_data)
-
-            for element in memberJson:  # check this card does not link any users yet
-                for user_card in element["IDm"]:
-                    if(user_card == new_card):
-                        return "already_used"
-
-            members_data[member_name]["IDm"].append(new_card)
             json.dump(members_data, udon_users_data)
-            return "register_succeed"
+        return "register_succeed"
 
     except Exception as e:
         print(e)
