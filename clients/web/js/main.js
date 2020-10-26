@@ -1,12 +1,12 @@
-function changeDisplay(elementId){
+function changeDisplayWithId(elementId){
     $(".components").css("display","none");
     $(`#${elementId}`).css("display","block");
 }
 
 async function start(){
-	changeDisplay("listening");
+	changeDisplayWithId("listening");
 	let status = await eel.start_udon()();
-	changeDisplay(status);
+	changeDisplayWithId(status);
 	setTimeout(start,1000);
 }
 
