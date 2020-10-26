@@ -5,7 +5,7 @@ function changeDisplayWithId(elementId){
 
 async function register(){
 
-	let memberName = "Fumiya_Sakaguchi"//$("#memberList").val();
+	let memberName = $("#memberList").val();
 	changeDisplayWithId("listening");
 	let firstTouch = await eel.read_idm_wrapper()();
 	changeDisplayWithId("touch_again");
@@ -14,7 +14,7 @@ async function register(){
 	if(firstTouch == secondTouch){
 		changeDisplayWithId("sending");
 		let status = await eel.registrar_wrapper(memberName,firstTouch);
-		console.log(status);s
+		console.log(status);
 		changeDisplayWithId(status);
 	}else{
 		changeDisplayWithId("not_available_card"); 
