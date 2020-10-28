@@ -3,24 +3,12 @@ function changeDisplayWithId(elementId){
     $(`#${elementId}`).css("display","block");
 }
 
+const socket = new WebSocket("ws://localhost:3000");
 async function register(){
 
 	let memberName = $("#memberList").val();
 	changeDisplayWithId("listening");
-	let firstTouch = await eel.read_idm_wrapper()();
-	changeDisplayWithId("touch_again");
-	let secondTouch = await eel.read_idm_wrapper()();
-
-	if(firstTouch == secondTouch){
-		changeDisplayWithId("sending");
-		let status = await eel.registrar_wrapper(memberName,idm);
-		changeDisplayWithId(status);
-	}else{
-		changeDisplayWithId("not_available_card"); 
-	}
-
-	setTimeout(1000);
-	changeDisplayWithId("select_user");
+	socket.send(memberName);
 }
 
 async function fetchAndSetMemberList(){
@@ -45,8 +33,17 @@ async function fetchAndSetMemberList(){
 	})
 }
 
-window.onload = ()=>{
-	$(".register_start").click(register);
-	changeDisplayWithId("select_user");
-	fetchAndSetMemberList();
+
+socket.addEventListener("message",(message)=>{
+	changeDisplayWithId(message);
+	if(message !== "sending"){
+		setTimeout(startRegister,1000);
+	}
+})
+
+function startRegister(){
+	socket.send("client_ready");
+	changeDisplayWithId("listening");
 }
+
+window.onload=startRegister();

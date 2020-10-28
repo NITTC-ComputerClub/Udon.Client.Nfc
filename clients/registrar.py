@@ -4,6 +4,5 @@ from udon_modules import udon_db
 
 if __name__ == "__main__":
     server = WebsocketServer(9999,host="localhost")
-    server.set_fn_new_client()
-    server.set_fn_message_received()
+    server.set_fn_message_received(udon_card.begin_register)
     server.run_forever()
