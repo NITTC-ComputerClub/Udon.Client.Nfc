@@ -6,7 +6,6 @@ from udon_modules import udon_db
 from udon_modules import udon_api
 
 clf = nfc.ContactlessFrontend("usb")
-udon_status = ""
 
 def read_idm():
     card= clf.connect(rdwr={'on-connect': lambda card: False})
@@ -14,12 +13,21 @@ def read_idm():
     return str(converted_id)
 
 
-def begin_attendance_reading():
+def begin_attendance(client,server,message):
     print("Listening")
     idm= read_idm()
     member_id = udon_db.tomember(idm)
+
+
     if(member_id == ""):
-        udon_status = "unknown_card"
+        server.send_message_to_all("unknown_card")
+        return True
     else:
+        server.send_message_to_all("sending")
         udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "internal_error"
-    return udon_status
+        server.send_message_to_all(udon_status)
+       
+    
+    
+
+    

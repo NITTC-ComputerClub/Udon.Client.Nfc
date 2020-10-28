@@ -3,11 +3,16 @@ function changeDisplayWithId(elementId){
     $(`#${elementId}`).css("display","block");
 }
 
-async function start(){
+const socket= new WebSocket("ws://localhost:3000");
+
+socket.addEventListener("message",(message)=>{
+	changeDisplayWithId(message);
+	setTimeout(openConnection,1000);
+})
+
+function openConnection(){
+	socket.send("client_ready");
 	changeDisplayWithId("listening");
-	let status = await eel.start_udon()();
-	changeDisplayWithId(status);
-	setTimeout(start,1000);
 }
 
-window.onload=start();
+window.onload=openConnection();
