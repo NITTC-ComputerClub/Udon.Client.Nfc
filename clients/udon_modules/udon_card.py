@@ -16,14 +16,14 @@ def read_idm():
 def begin_attendance(client,server,message):
     print("Listening")
     idm= read_idm()
+    print(idm)
     member_id = udon_db.tomember(idm)
-
 
     if(member_id == ""):
         server.send_message_to_all("unknown_card")
     else:
         server.send_message_to_all("sending")
-        udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "connection_error"
+        udon_status ="record_succeed"#udon_api.record_attendance(member_id) #"record_succeed" or "connection_error"
         server.send_message_to_all(udon_status)
        
     

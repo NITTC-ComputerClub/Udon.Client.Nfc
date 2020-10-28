@@ -3,18 +3,23 @@ function changeDisplayWithId(elementId){
     $(`#${elementId}`).css("display","block");
 }
 
-const socket= new WebSocket("ws://localhost:3000");
 
-socket.addEventListener("message",(message)=>{
-	changeDisplayWithId(message);
-	if(message !== "sending"){
-		setTimeout(startAttendance,1000);
+
+window.onload=()=>{
+	const socket= new WebSocket("ws://localhost:9999");
+
+	socket.onmessage = (message)=>{
+		changeDisplayWithId(message.data);
+		if(message !== "sending"){
+			setTimeout(()=>{
+				changeDisplayWithId("listening");
+				socket.send("client_ready");
+				},1000);
+		}
+	};
+	
+	socket.onopen = ()=>{
+		changeDisplayWithId("listening");
+		socket.send("client_ready");
 	}
-})
-
-function startAttendance(){
-	socket.send("client_ready");
-	changeDisplayWithId("listening");
 }
-
-window.onload=startAttendance();

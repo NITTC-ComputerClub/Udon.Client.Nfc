@@ -2,15 +2,6 @@ function changeDisplayWithId(elementId){
     $(".components").css("display","none");
     $(`#${elementId}`).css("display","block");
 }
-
-const socket = new WebSocket("ws://localhost:3000");
-async function register(){
-
-	let memberName = $("#memberList").val();
-	changeDisplayWithId("listening");
-	socket.send(memberName);
-}
-
 async function fetchAndSetMemberList(){
 	//TODO set GitHub Token const GitHubToken = ;
 	const responce = fetch("https://api.github.com/repos/nittc-computerclub/members-db-dist/contents/members.json",{
@@ -33,17 +24,29 @@ async function fetchAndSetMemberList(){
 	})
 }
 
+const socket = new WebSocket("ws://localhost:9999");
 
-socket.addEventListener("message",(message)=>{
-	changeDisplayWithId(message);
-	if(message !== "sending"){
-		setTimeout(startRegister,1000);
+socket.onopen = ()=>{
+
+	async function register(){
+		socket.send("client_ready");
+		let memberName = $("#memberList").val();
+		changeDisplayWithId("listening");
+		socket.send(memberName);
 	}
-})
-
-function startRegister(){
-	socket.send("client_ready");
-	changeDisplayWithId("listening");
+	
+	$("#register_start").click=register;
+	
+	socket.addEventListener("message",(message)=>{
+		changeDisplayWithId(message);
+		if(message !== "sending"){
+			setTimeout(()=>{
+				changeDisplayWithId("listening");
+				socket.send("client_ready");
+				},1000);
+		}
+	});
+	//fetchAndSetMemberList();
+	changeDisplayWithId("select_user");
 }
 
-window.onload=startRegister();
