@@ -44,4 +44,4 @@ def record_attendance(member_id):
         return "record_succeed"
     else:
         print(r.json())
-        return "internal_error"
+        return "connection_error"

@@ -7,12 +7,14 @@ const socket= new WebSocket("ws://localhost:3000");
 
 socket.addEventListener("message",(message)=>{
 	changeDisplayWithId(message);
-	setTimeout(openConnection,1000);
+	if(message !== "sending"){
+		setTimeout(startAttendance,1000);
+	}
 })
 
-function openConnection(){
+function startAttendance(){
 	socket.send("client_ready");
 	changeDisplayWithId("listening");
 }
 
-window.onload=openConnection();
+window.onload=startAttendance();

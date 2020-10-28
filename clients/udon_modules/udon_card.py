@@ -24,7 +24,7 @@ def begin_attendance(client,server,message):
         return True
     else:
         server.send_message_to_all("sending")
-        udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "internal_error"
+        udon_status = udon_api.record_attendance(member_id) #"record_succeed" or "connection_error"
         server.send_message_to_all(udon_status)
        
     
