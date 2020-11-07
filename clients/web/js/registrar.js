@@ -3,11 +3,10 @@ function changeDisplayWithId(elementId){
     $(`#${elementId}`).css("display","block");
 }
 async function fetchAndSetMemberList(){
-	const GitHubToken = "";
 	const responce = fetch("https://api.github.com/repos/nittc-computerclub/members-db-dist/contents/members.json",{
 		headers:{
-			'Accept':'application/vnd.github.v3+json',
-			'Authorization':'token ${GitHubToken}'
+			'Accept':'application/vnd.github.raw+json',
+			'Authorization':'token '
 		}
 	}).then(async(responce)=>{
 		
@@ -16,12 +15,13 @@ async function fetchAndSetMemberList(){
 		}
 		let membersdb = await responce.json();
 		let base64decoder = new TextDecoder();
-		console.log(btoa(base64decoder.decode(membersdb.content)));
-		return btoa(membersdb.content)
-	}).then((membersdb)=>{
 		console.log(membersdb);
-		membersdb.name.forEach((name)=>{
-			$("#memberList").append(`<option class=\"list-group-item\" value =${name}>${name}</option>`);
+		console.log(await decodeURIComponent(atob(membersdb.content)));
+		return JSON.parse(atob(membersdb.content));
+	}).then((membersdb)=>{
+		console.log();
+		membersdb.map(member=>member.name).forEach((name)=>{
+			$("#member_list").append(`<option class=\"list-group-item\" value =${name}>${name}</option>`);
 		});
 	}).catch((error)=>{
 		console.error(error);
