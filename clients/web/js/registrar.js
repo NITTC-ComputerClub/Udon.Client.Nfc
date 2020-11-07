@@ -3,19 +3,24 @@ function changeDisplayWithId(elementId){
     $(`#${elementId}`).css("display","block");
 }
 async function fetchAndSetMemberList(){
-	//TODO set GitHub Token const GitHubToken = ;
+	const GitHubToken = "";
 	const responce = fetch("https://api.github.com/repos/nittc-computerclub/members-db-dist/contents/members.json",{
 		headers:{
-			'Accept': 'application/vnd.github.raw+json',
-			'Authorization':`${GitHubToken}`
+			'Accept':'application/vnd.github.v3+json',
+			'Authorization':'token ${GitHubToken}'
 		}
-	}).then((responce)=>{
+	}).then(async(responce)=>{
+		
 		if(!responce.ok){
 			throw new Error(`responce wasn't ok:${responce.status}`);
 		}
-		return responce.json();
-	}).then((element)=>{
-		element.name.forEach((name)=>{
+		let membersdb = await responce.json();
+		let base64decoder = new TextDecoder();
+		console.log(btoa(base64decoder.decode(membersdb.content)));
+		return btoa(membersdb.content)
+	}).then((membersdb)=>{
+		console.log(membersdb);
+		membersdb.name.forEach((name)=>{
 			$("#memberList").append(`<option class=\"list-group-item\" value =${name}>${name}</option>`);
 		});
 	}).catch((error)=>{
@@ -43,10 +48,10 @@ socket.onopen = ()=>{
 			setTimeout(()=>{
 				changeDisplayWithId("listening");
 				socket.send("client_ready");
-				},1000);
+			},1000);
 		}
 	});
-	//fetchAndSetMemberList();
+	fetchAndSetMemberList();
 	changeDisplayWithId("select_user");
 }
 
