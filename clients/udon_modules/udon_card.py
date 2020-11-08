@@ -34,8 +34,6 @@ def begin_register(client,server,message):
     second_touch = read_idm()
     if(first_touch == second_touch):
         server.send_message_to_all("sending")
-
-
         register_res = udon_db.register_newcard(member_name,first_touch)
         server.send_message_to_all(register_res)
     else:

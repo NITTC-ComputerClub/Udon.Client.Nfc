@@ -1,12 +1,15 @@
-function changeDisplayWithId(elementId){
-    $(".components").css("display","none");
-    $(`#${elementId}`).css("display","block");
+async function changeDisplayWithId(elementId){
+    
+	console.log(elementId.data);
+	$(".components").css("display","none");
+	$(`#${elementId.data || elementId}`).css("display","block");
 }
+
 async function fetchAndSetMemberList(){
 	const responce = fetch("https://api.github.com/repos/nittc-computerclub/members-db-dist/contents/members.json",{
 		headers:{
 			'Accept':'application/vnd.github.raw+json',
-			'Authorization':'token '
+			'Authorization':'token '//Set token
 		}
 	}).then(async(responce)=>{
 		
@@ -17,7 +20,9 @@ async function fetchAndSetMemberList(){
 		let base64decoder = new TextDecoder();
 		console.log(membersdb);
 		console.log(await decodeURIComponent(atob(membersdb.content)));
-		return JSON.parse(atob(membersdb.content));
+
+		return JSON.parse(atob(membersdb.content));//日本語が正しくデコードされない問題
+
 	}).then((membersdb)=>{
 		console.log();
 		membersdb.map(member=>member.name).forEach((name)=>{
@@ -33,25 +38,27 @@ const socket = new WebSocket("ws://localhost:9999");
 
 socket.onopen = ()=>{
 
-	async function register(){
-		socket.send("client_ready");
-		let memberName = $("#memberList").val();
-		changeDisplayWithId("listening");
-		socket.send(memberName);
-	}
-	
-	$("#register_start").click=register;
-	
-	socket.addEventListener("message",(message)=>{
-		changeDisplayWithId(message);
-		if(message !== "sending"){
-			setTimeout(()=>{
-				changeDisplayWithId("listening");
-				socket.send("client_ready");
-			},1000);
-		}
-	});
 	fetchAndSetMemberList();
 	changeDisplayWithId("select_user");
+
+	
+	$("#register_start").click(async ()=>{
+		let memberName = $("#member_list").val();
+		changeDisplayWithId("listening");
+		socket.send(memberName);
+		console.log("start!");
+	});
+	
+	socket.addEventListener("message",(message)=>{
+		changeDisplayWithId(message.data);
+
+		const onTheWayStatuses = ["sending","listening","touch_again"];
+
+		if(!onTheWayStatuses.includes(message.data)){
+			setTimeout(()=>{
+				changeDisplayWithId("select_user");
+			},2000);
+		}
+	});
 }
 
